@@ -7,6 +7,8 @@ trigger:
 - master
 
 # what image the build files are create on, not what they will be deployed to
+# you can use a MS hosted image that is guaranteed to access NuGet
+# you can use a self hosted VM that is not guaranteed to access NuGet as a work around you can cache your dependencies so they are always reachable
 pool:
   vmImage: 'windows-latest'
 
