@@ -33,12 +33,12 @@ steps:
   displayName: Publish
   inputs:
    command: publish
-   projects: CodingEventsAPI/CodingEventsAPI.proj
+   projects: CodingEventsAPI/CodingEventsAPI.csproj
    arguments: --configuration $(BuildConfiguration) --output $(Build.ArtifiactStagingDirectory) -r win-x64
    zipAfterPublish: True
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)\publish' 
     artifactName: 'coding-events-api'
 
 # implicit publish all projects in this repository that are web projects
