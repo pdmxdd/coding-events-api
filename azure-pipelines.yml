@@ -36,6 +36,10 @@ steps:
    projects: CodingEventsAPI/CodingEventsAPI.proj
    arguments: --configuration $(BuildConfiguration) --output $(Build.ArtifiactStagingDirectory) -r win-x64
    zipAfterPublish: True
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'coding-events-api'
 
 # implicit publish all projects in this repository that are web projects
 # ask engineers how the DotNeteCoreCLI determine if a project is a web project
