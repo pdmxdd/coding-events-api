@@ -13,10 +13,14 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
+# straightforward approach that mirrors what's student have seen
+# pros: very straightforward, very concise
 # steps:
 # - script: dotnet build --configuration $(buildConfiguration)
 #   displayName: 'dotnet build $(buildConfiguration)'
 
+# less straightforward, but is extensible, and more realistic to what they will see in the future (assumption)
+# ask engineers what is the MS preferred way of writing YAML pipelines
 steps:
 - task: DotNetCoreCLI@2
   displayName: Restore
