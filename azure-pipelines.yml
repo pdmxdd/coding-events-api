@@ -29,3 +29,23 @@ steps:
   inputs:
     command: build
     arguments: --configuration $(buildConfiguration)
+
+# implicit publish all projects in this repository that are web projects
+# ask engineers how the DotNeteCoreCLI determine if a project is a web project
+# steps:
+# - task: DotNetCoreCLI@2
+#   inputs:
+#     command: publish
+#     publishWebProjects: True
+
+# explicit 
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+   command: publish
+   projects: CodingEventsAPI/CodingEventsAPI.proj
+   arguments: --configuration $(BuildConfiguration) --output $(Build.ArtifiactStagingDirectory) -r win-x64
+
+
+
+# LOOK UP CONDITIONAL STAGES!!!
