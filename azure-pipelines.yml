@@ -30,16 +30,17 @@ steps:
     command: build
     arguments: --configuration $(buildConfiguration)
 - task: DotNetCoreCLI@2
-  displayName: Publish
   inputs:
-   command: publish
-   projects: CodingEventsAPI/CodingEventsAPI.csproj
-   arguments: --configuration $(BuildConfiguration) --output $(Build.ArtifiactStagingDirectory) -r win-x64
-   zipAfterPublish: True
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)\CodingEventsAPI' 
-    artifactName: 'coding-events-api'
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'myWebsiteName'
 
 # implicit publish all projects in this repository that are web projects
 # ask engineers how the DotNeteCoreCLI determine if a project is a web project
