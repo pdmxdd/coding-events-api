@@ -38,7 +38,7 @@ steps:
    zipAfterPublish: True
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)\publish' 
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'coding-events-api'
 
 # implicit publish all projects in this repository that are web projects
