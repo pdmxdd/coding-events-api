@@ -1,0 +1,23 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfig: 'Release'
+  runtimeId: 'linux-x64'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Build [config: $(buildConfig)]'
+  inputs:
+    command: build
+    arguments: '-c $(buildConfig)'
+- task: DotNetCoreCLI@2
+  displayName: 'Publish [config $(buildConfig)] [runtime $(runtimeId)]'
+  inputs:
+    command: publish
+    arguments: '-c $(buildConfig) -r $(runtimeId) -p:PublishSingleFile=true'
+    projects: '**/CodingEventsAPI.csproj'
+    
