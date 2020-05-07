@@ -5,9 +5,10 @@ pool:
   vmImage: "ubuntu-latest"
 
 variables:
-  buildConfig: "Release"
-  runtimeId: "linux-x64"
+  BuildConfig: "Release"
+  RuntimeId: "linux-x64"
   ProjectName: "CodingEventsAPI"
+  ArtifactOutputDir: "$(System.DefaultWorkingDirectory)/bin/$(ProjectName)"
 
 stages:
   - stage: BuildStage
@@ -16,10 +17,10 @@ stages:
         displayName: Create Linux Artifact
         steps:
           - task: DotNetCoreCLI@2
-            displayName: "Publish [config $(buildConfig)] [runtime $(runtimeId)]"
+            displayName: "Publish [config $(BuildConfig)] [runtime $(RuntimeId)]"
             inputs:
               command: publish
-              arguments: "-c $(buildConfig) -r $(runtimeId) -p:PublishSingleFile=true"
+              arguments: "-c $(BuildConfig) -r $(RuntimeId) -o $(ArtifactOutputDir) -p:PublishSingleFile=true"
               projects: "**/$(ProjectName).csproj"
 
   - stage: PublishStage
@@ -28,8 +29,8 @@ stages:
       - job: PublishLinuxArtifact
         displayName: Publish Linux Executable Artifact
         steps:
-          - script: ls -al "$(Build.StagingDirectory)"
-          - publish: "$(Build.StagingDirectory)"
+          - script: ls -l "$(ArtifactOutputDir)"
+          - publish: "$(ArtifactOutputDir)"
             artifact: "$(ProjectName)"
 
   - stage: DeployStage
