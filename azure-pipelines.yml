@@ -27,7 +27,6 @@ stages:
         dependsOn: BuildForLinux
         displayName: Publish Linux Executable Artifact
         steps:
-          - script: ls -l "$(ArtifactOutputDir)"
           - publish: "$(ArtifactOutputDir)/$(ProjectName).zip"
             artifact: "$(ProjectName)"
 
