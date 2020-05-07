@@ -57,6 +57,7 @@ stages:
               - download: current
                 artifact: "$(ProjectName)"
               - script: echo "downloaded artifact"
+              - script: ls -l "$(Pipeline.Workspace)"
           deploy:
             steps:
               - script: echo "executing artifact at $(Pipeline.Workspace)/$(ProjectName)"
