@@ -28,8 +28,8 @@ stages:
       - job: PublishLinuxArtifact
         displayName: Publish Linux Executable Artifact
         steps:
-          - script: ls -al "$(Build.ArtifactDirectory)"
-          - publish: "$(Build.ArtifactDirectory)"
+          - script: ls -al "$(Build.StagingDirectory)"
+          - publish: "$(Build.StagingDirectory)"
             artifact: "$(ProjectName)"
 
   - stage: DeployStage
