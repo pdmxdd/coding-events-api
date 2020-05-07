@@ -8,7 +8,7 @@ variables:
   BuildConfig: "Release"
   RuntimeId: "linux-x64"
   ProjectName: "CodingEventsAPI"
-  ArtifactOutputDir: "$(System.DefaultWorkingDirectory)/bin"
+  ArtifactOutputDir: "$(Build.StagingDirectory)/bin"
 
 stages:
   - stage: BuildStage
