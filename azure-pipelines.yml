@@ -8,7 +8,7 @@ variables:
   BuildConfig: "Release"
   RuntimeId: "linux-x64"
   ProjectName: "CodingEventsAPI"
-  ArtifactOutputDir: "$(System.DefaultWorkingDirectory)/bin/$(ProjectName)"
+  ArtifactOutputDir: "$(System.DefaultWorkingDirectory)/bin"
 
 stages:
   - stage: BuildStage
@@ -22,6 +22,7 @@ stages:
               command: publish
               arguments: "-c $(BuildConfig) -r $(RuntimeId) -o $(ArtifactOutputDir) -p:PublishSingleFile=true"
               projects: "**/$(ProjectName).csproj"
+          - script: ls -l "$(ArtifactOutputDir)"
 
   - stage: PublishStage
     dependsOn: BuildStage
