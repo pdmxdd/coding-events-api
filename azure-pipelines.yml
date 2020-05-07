@@ -45,13 +45,14 @@ stages:
       # alternatively
       # environment: "$(EnvName).$(VmName)"
       environment:
-        name: "$(EnvName)"
-        resourceName: "$(VmName)"
+        name: linux
+        resourceName: student-linux
         resourceType: VirtualMachine
       strategy:
         runOnce:
           preDeploy:
             steps:
+              - script: echo "EnvName [$(EnvName)] VmName [$(VmName)]"
               - download: current
                 artifact: "$(ProjectName)"
               - script: echo "downloaded artifact"
