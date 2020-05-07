@@ -8,7 +8,7 @@ variables:
   BuildConfig: "Release"
   RuntimeId: "linux-x64"
   ProjectName: "CodingEventsAPI"
-  ArtifactOutputDir: "$(Build.StagingDirectory)/bin"
+  ArtifactOutputDir: "$(Build.StagingDirectory)"
 
 stages:
   - stage: BuildStage
@@ -27,7 +27,7 @@ stages:
         dependsOn: BuildForLinux
         displayName: Publish Linux Executable Artifact
         steps:
-          - publish: "$(ArtifactOutputDir)/$(ProjectName).zip"
+          - publish: "$(ArtifactOutputDir)"
             artifact: "$(ProjectName)"
 
   - stage: DeployStage
