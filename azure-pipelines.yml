@@ -24,14 +24,11 @@ stages:
               projects: "**/$(ProjectName).csproj"
           - script: ls -l "$(ArtifactOutputDir)"
 
-  - stage: PublishStage
-    dependsOn: BuildStage
-    jobs:
       - job: PublishLinuxArtifact
         displayName: Publish Linux Executable Artifact
         steps:
           - script: ls -l "$(ArtifactOutputDir)"
-          - publish: "$(ArtifactOutputDir)"
+          - publish: "$(ArtifactOutputDir)/$(ProjectName).zip"
             artifact: "$(ProjectName)"
 
   - stage: DeployStage
