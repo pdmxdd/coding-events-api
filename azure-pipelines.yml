@@ -23,8 +23,8 @@ stages:
               arguments: "-c $(BuildConfig) -r $(RuntimeId) -o $(ArtifactOutputDir) -p:PublishSingleFile=true"
               projects: "**/$(ProjectName).csproj"
           - script: ls -l "$(ArtifactOutputDir)"
-
       - job: PublishLinuxArtifact
+        dependsOn: BuildForLinux
         displayName: Publish Linux Executable Artifact
         steps:
           - script: ls -l "$(ArtifactOutputDir)"
