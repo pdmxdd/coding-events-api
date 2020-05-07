@@ -6,26 +6,14 @@ pool:
 
 variables:
   buildConfig: "Release"
+  runtimeId: "linux-x64"
   ProjectName: "CodingEventsAPI"
 
 stages:
   - stage: BuildStage
     jobs:
-      - job: BuildJob
-        steps:
-          - task: DotNetCoreCLI@2
-            displayName: "Build [config: $(buildConfig)]"
-            inputs:
-              command: build
-              arguments: "-c $(buildConfig)"
-
-  - stage: PublishStage
-    dependsOn: BuildStage
-    jobs:
-      - job: LinuxPublishJob
+      - job: BuildForLinux
         displayName: Create Linux Artifact
-        variables:
-          runtimeId: "linux-x64"
         steps:
           - task: DotNetCoreCLI@2
             displayName: "Publish [config $(buildConfig)] [runtime $(runtimeId)]"
@@ -33,6 +21,16 @@ stages:
               command: publish
               arguments: "-c $(buildConfig) -r $(runtimeId) -p:PublishSingleFile=true"
               projects: "**/$(ProjectName).csproj"
+
+  - stage: PublishStage
+    dependsOn: BuildStage
+    jobs:
+      - job: PublishLinuxArtifact
+        displayName: Publish Linux Executable Artifact
+        steps:
+          - script: ls -al "$(Build.ArtifactDirectory)"
+          - publish: "$(Build.ArtifactDirectory)"
+            artifact: "$(ProjectName)"
 
   - stage: DeployStage
     dependsOn: PublishStage
@@ -44,15 +42,19 @@ stages:
       displayName: Linux Deploy
       # alternatively
       # environment: "$(EnvName).$(VmName)"
+      # substitution isnt working here?
+      # environment:
+      #   name: "$(EnvName)"
+      #   resourceName: "$(VmName)"
+      #   resourceType: VirtualMachine
       environment:
-        name: linux
-        resourceName: student-linux
+        name: "linux"
+        resourceName: "student-linux"
         resourceType: VirtualMachine
       strategy:
         runOnce:
           preDeploy:
             steps:
-              - script: echo "EnvName [$(EnvName)] VmName [$(VmName)]"
               - download: current
                 artifact: "$(ProjectName)"
               - script: echo "downloaded artifact"
